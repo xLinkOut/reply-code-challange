@@ -1,3 +1,5 @@
+from pprint import pprint
+
 #Avarange project latency, vector vector matrix
 def APL(pkgs, Ls, Us):
     num = 0

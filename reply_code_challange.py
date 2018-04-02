@@ -1,4 +1,5 @@
 import sys, json
+from pprint import pprint
 
 try:
     input_filename = str(sys.argv[1])
@@ -60,7 +61,7 @@ for v in range(data['param']['V']):
         }
         # # # # -- SERVICES IN REGION BLOCK -- # # # # 
         for s in range(data['param']['S']):
-            data['providers'][provider_name]['regions'][region_name]['units_of_services_per_package'][s] = region_data[s+2]
+            data['providers'][provider_name]['regions'][region_name]['units_of_services_per_package'][s] = int(region_data[s+2])
         # # # # -- LATENCIES IN REGION BLOCK -- # # # #
         latencies_line = input_file.readline().strip()
         latencies = latencies_line.split(' ',data['param']['C'])
@@ -73,7 +74,7 @@ for p in range(data['param']['P']):
     project_data = project_line.split(' ',2+data['param']['S'])
     unit_needed = {}
     for s in range(data['param']['S']):
-        unit_needed[s] = project_data[s+2]
+        unit_needed[s] = int(project_data[s+2])
     project = {
         'penality': project_data[0],
         'country': project_data[1],
@@ -98,7 +99,3 @@ for row in range(len(M.A)):
     for col in range(len(M.A[0])):
         print(M.A[row][col], end=' ')
     print("<= ", M.B[row])
-
-
-
-
