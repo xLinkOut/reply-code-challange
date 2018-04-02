@@ -60,7 +60,7 @@ for v in range(data['param']['V']):
         }
         # # # # -- SERVICES IN REGION BLOCK -- # # # # 
         for s in range(data['param']['S']):
-            data['providers'][provider_name]['regions'][region_name]['units_of_services_per_package'][s] = float(region_data[s+1])
+            data['providers'][provider_name]['regions'][region_name]['units_of_services_per_package'][s] = region_data[s+2]
         # # # # -- LATENCIES IN REGION BLOCK -- # # # #
         latencies_line = input_file.readline().strip()
         latencies = latencies_line.split(' ',data['param']['C'])
