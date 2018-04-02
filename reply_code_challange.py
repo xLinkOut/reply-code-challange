@@ -83,9 +83,22 @@ for p in range(data['param']['P']):
 
 #print(json.dumps(data))
 
-output_filename = input_filename.split('/')[-1][:-3]
-with open(output_filename + ".json",'w') as fl:
-    fl.write(json.dumps(data))
-    fl.close()
+#output_filename = input_filename.split('/')[-1][:-3]
+#with open(output_filename + ".json",'w') as fl:
+#    fl.write(json.dumps(data))
+#    fl.close()
 
-input_file.close()
+#input_file.close()
+
+import cloud_adventure 
+
+M = cloud_adventure.getMatrixP(data, data['projects'][0])
+
+for row in range(len(M.A)):
+    for col in range(len(M.A[0])):
+        print(M.A[row][col], end=' ')
+    print("<= ", M.B[row])
+
+
+
+
