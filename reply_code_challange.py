@@ -109,8 +109,8 @@ for row in range(len(M.A)):
 from scipy import optimize
 
 res = optimize.linprog(M.C, M.A, M.B)
-print("status: ", res.status)
-if(status == 0): #print output for the challenge
+
+if(res.status == 0): #print output for the challenge
     c_row = 0
     provider_count = 0
     for k, provider in obj['providers'].items():
@@ -119,4 +119,5 @@ if(status == 0): #print output for the challenge
                 print(provider_count, " ", k, " ", M.C[c_row])
             c_row += 1
         provider_count += 1
-
+else
+    print("status: ", res.status)
