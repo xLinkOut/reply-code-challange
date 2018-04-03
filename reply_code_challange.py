@@ -106,7 +106,7 @@ for row in range(len(M.A)):
         print(M.A[row][col], end=' ')
     print("<= ", M.B[row])
 
-import scipy.optimize
+from scipy import optimize
 
 res = scipy.optimize.linprog(M.C, M.A, M.B)
 print("status: ", res.status)
