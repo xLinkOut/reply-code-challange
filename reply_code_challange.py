@@ -114,10 +114,12 @@ if(res.status == 0): #print output for the challenge
     c_row = 0
     provider_count = 0
     for k, provider in data['providers'].items():
+        region_c = 0
         for k, region in provider['regions'].items():
             if(M.C[c_row] != 0):
-                print(provider_count, " ", k, " ", M.C[c_row])
+                print(provider_count, " ", region_c, " ", M.C[c_row])
             c_row += 1
+            region_c += 1
         provider_count += 1
 else:
     print("status: ", res.status)
