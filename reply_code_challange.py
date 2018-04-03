@@ -113,7 +113,7 @@ res = optimize.linprog(M.C, M.A, M.B)
 if(res.status == 0): #print output for the challenge
     c_row = 0
     provider_count = 0
-    for k, provider in obj['providers'].items():
+    for k, provider in data['providers'].items():
         for k, region in provider['regions'].items():
             if(M.C[c_row] != 0):
                 print(provider_count, " ", k, " ", M.C[c_row])
