@@ -94,7 +94,7 @@ for p in range(data['param']['P']):
 import cloud_adventure 
 
 M = cloud_adventure.getMatrixP(data, data['projects'][0])
-def printMatrix(M)
+def printMatrix(M):
     for v in M.C:
         print(v, end=' ')
     print('')
