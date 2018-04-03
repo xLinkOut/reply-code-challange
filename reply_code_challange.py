@@ -108,6 +108,6 @@ for row in range(len(M.A)):
 
 from scipy import optimize
 
-res = scipy.optimize.linprog(M.C, M.A, M.B)
+res = optimize.linprog(M.C, M.A, M.B)
 print("status: ", res.status)
 pprint(res.x)
