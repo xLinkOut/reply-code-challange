@@ -94,17 +94,17 @@ for p in range(data['param']['P']):
 import cloud_adventure 
 
 M = cloud_adventure.getMatrixP(data, data['projects'][0])
-
-for v in M.C:
-    print(v, end=' ')
-print('')
-for i in range(len(M.C)):
-    print('_', end=' ')
-print('')
-for row in range(len(M.A)):
-    for col in range(len(M.A[0])):
-        print(M.A[row][col], end=' ')
-    print("<= ", M.B[row])
+def printMatrix(M)
+    for v in M.C:
+        print(v, end=' ')
+    print('')
+    for i in range(len(M.C)):
+        print('_', end=' ')
+    print('')
+    for row in range(len(M.A)):
+        for col in range(len(M.A[0])):
+            print(M.A[row][col], end=' ')
+        print("<= ", M.B[row])
 
 from scipy import optimize
 import math
