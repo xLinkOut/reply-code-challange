@@ -107,6 +107,7 @@ for row in range(len(M.A)):
     print("<= ", M.B[row])
 
 from scipy import optimize
+import math
 
 res = optimize.linprog(M.C, M.A, M.B)
 
@@ -116,8 +117,8 @@ if(res.status == 0): #print output for the challenge
     for k, provider in data['providers'].items():
         region_c = 0
         for k, region in provider['regions'].items():
-            if(M.C[c_row] != 0):
-                print(provider_count, " ", region_c, " ", M.C[c_row])
+            if(res.x[c_row] != 0):
+                print(provider_count, " ", region_c, " ", int(mat.ceil(res.x[c_row]))
             c_row += 1
             region_c += 1
         provider_count += 1
