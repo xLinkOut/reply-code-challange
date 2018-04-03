@@ -95,7 +95,19 @@ import cloud_adventure
 
 M = cloud_adventure.getMatrixP(data, data['projects'][0])
 
+for v in M.C:
+    print(v, end=' ')
+print('')
+for i in range(len(M.C)):
+    print('_', end=' ')
+print('')
 for row in range(len(M.A)):
     for col in range(len(M.A[0])):
         print(M.A[row][col], end=' ')
     print("<= ", M.B[row])
+
+import scipy.optimize
+
+res = scipy.optimize.linprog(M.C, M.A, M.B)
+print("status: ", res.status)
+pprint(res.x)

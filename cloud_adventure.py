@@ -85,7 +85,6 @@ def getMatrixP(obj, project):
 
     for k, provider in obj['providers'].items():
         for k, region in provider['regions'].items():
-            pprint(region)
             row = 0
             for k, pkgu in region['units_of_services_per_package'].items():
                 res.A[row][col] = -pkgu
@@ -96,7 +95,14 @@ def getMatrixP(obj, project):
     
     col = 0
     for k, provider in obj['providers'].items():
-        for k, region in provider['regions'].items():
+        for k, region in provider['regions'].items(): 
+            # euristic
+            res.C[col] = region['packages_unit_cost'] 
+            sum = 0
+            for k, s in region['units_of_services_per_package'].items():
+                sum += s 
+            res.C[col] /= sum
+            # end euristic
             res.A[row][col] = 1
             row += 1
             col += 1
