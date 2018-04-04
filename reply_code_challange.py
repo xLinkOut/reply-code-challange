@@ -106,6 +106,8 @@ def printMatrix(M):
             print(M.A[row][col], end=' ')
         print("<= ", M.B[row])
 
+printMatrix(M)
+		
 from scipy import optimize
 import math
 
@@ -114,11 +116,11 @@ res = optimize.linprog(M.C, M.A, M.B)
 if(res.status == 0): #print output for the challenge
     c_row = 0
     provider_count = 0
-    for k, provider in data['providers'].items():
+    for p_name, provider in data['providers'].items():
         region_c = 0
-        for k, region in provider['regions'].items():
+        for r_name, region in provider['regions'].items():
             if(res.x[c_row] != 0):
-                print(provider_count, " ", region_c, " ", int(math.ceil(res.x[c_row])))
+                print(provider_count, "(", p_name, ") ", region_c, "(", r_name, ") ", int(math.ceil(res.x[c_row])))
             c_row += 1
             region_c += 1
         provider_count += 1

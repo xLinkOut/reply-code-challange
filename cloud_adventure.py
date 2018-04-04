@@ -78,33 +78,26 @@ def getMatrixP(obj, project):
     col = 0
     row = 0
     rowb = 0
-    
+    col_lim = 0
     for k, u in project['unit_needed'].items():
         res.B[rowb] = -u
         rowb += 1
 
     for k, provider in obj['providers'].items():
         for k, region in provider['regions'].items():
+            sum = 0
             row = 0
             for k, pkgu in region['units_of_services_per_package'].items():
                 res.A[row][col] = -pkgu
+                sum += pkgu
                 row += 1
-            col += 1
             res.B[rowb] = region['availability_packages']
-            rowb +=1
-    
-    col = 0
-    for k, provider in obj['providers'].items():
-        for k, region in provider['regions'].items(): 
+
             # euristic
-            res.C[col] = region['packages_unit_cost'] 
-            sum = 0
-            for k, s in region['units_of_services_per_package'].items():
-                sum += s 
-            res.C[col] /= sum
+            res.C[col] = region['packages_unit_cost'] / sum
             # end euristic
-            res.A[row][col] = 1
-            row += 1
+            res.A[rowb][col] = 1
+            rowb +=1
             col += 1
 
     return res
