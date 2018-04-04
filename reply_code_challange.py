@@ -124,5 +124,6 @@ if(res.status == 0): #print output for the challenge
             c_row += 1
             region_c += 1
         provider_count += 1
+    print('')
 else:
     print("status: ", res.status)
