@@ -120,7 +120,7 @@ if(res.status == 0): #print output for the challenge
         region_c = 0
         for r_name, region in provider['regions'].items():
             if(res.x[c_row] != 0):
-                print(provider_count, "(", p_name, ") ", region_c, "(", r_name, ") ", int(math.ceil(res.x[c_row])))
+                print(provider_count, "(", p_name, ") ", region_c, "(", r_name, ") ", int(math.ceil(res.x[c_row])), end=' ')
             c_row += 1
             region_c += 1
         provider_count += 1
