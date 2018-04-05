@@ -69,9 +69,9 @@ class linprogMatrix(object):
 def getMatrixP(obj, project):
 #pprint(obj['providers'])
     pr = 0
-    S = obj['param']['S']
-    for k, provider in obj['providers'].items():
-        pr += provider['num_region']
+    S = obj.S
+    for provider in obj.Providers:
+        pr += len(provider)
 
     res = linprogMatrix(pr, S + pr, S + pr, pr)
 
@@ -79,22 +79,22 @@ def getMatrixP(obj, project):
     row = 0
     rowb = 0
     col_lim = 0
-    for k, u in project['unit_needed'].items():
-        res.B[rowb] = -u
+    for service in project[2]:
+        res.B[rowb] = -service
         rowb += 1
 
-    for k, provider in obj['providers'].items():
-        for k, region in provider['regions'].items():
-            sum = 0
+    for provider in obj.Providers:
+        for region in provider[1:]:
+            cumulate = 0
             row = 0
-            for k, pkgu in region['units_of_services_per_package'].items():
+            for pkgu in region[3]: #units service needed
                 res.A[row][col] = -pkgu
-                sum += pkgu
+                cumulate += pkgu
                 row += 1
-            res.B[rowb] = region['availability_packages']
+            res.B[rowb] = region[1] # availability packg
 
             # euristic
-            res.C[col] = region['packages_unit_cost'] / sum
+            res.C[col] = region[2] / cumulate
             # end euristic
             res.A[rowb][col] = 1
             rowb +=1

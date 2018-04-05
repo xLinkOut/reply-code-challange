@@ -129,10 +129,9 @@ for p in range(data.P):
 input_file.close()
 data.printAll()
 
-'''
 import cloud_adventure 
 
-M = cloud_adventure.getMatrixP(data, data['projects'][0])
+M = cloud_adventure.getMatrixP(data, data.Projects[0])
 def printMatrix(M):
     for v in M.C:
         print(v, end=' ')
@@ -155,7 +154,7 @@ res = optimize.linprog(M.C, M.A, M.B)
 if(res.status == 0): #print output for the challenge
     c_row = 0
     provider_count = 0
-    for p_name, provider in data['providers'].items():
+    '''for p_name, provider in data['providers'].items():
         region_c = 0
         for r_name, region in provider['regions'].items():
             if(res.x[c_row] != 0):
@@ -163,7 +162,16 @@ if(res.status == 0): #print output for the challenge
             c_row += 1
             region_c += 1
         provider_count += 1
+    '''
+    for provider in data.Providers:
+        region_c = 0
+        for region in provider[1:]:
+            if(res.x[c_row] != 0):
+                print(provider_count, "(", provider[0], ") ", region_c, "(", region[0], ") ", int(math.ceil(res.x[c_row])), end=' ')
+            c_row += 1
+            region_c += 1
+        provider_count += 1
+    
     print('')
 else:
     print("status: ", res.status)
-'''
