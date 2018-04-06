@@ -131,7 +131,6 @@ data.printAll()
 
 import cloud_adventure 
 
-M = cloud_adventure.getMatrixP(data, data.Projects[0])
 def printMatrix(M):
     for v in M.C:
         print(v, end=' ')
@@ -144,34 +143,33 @@ def printMatrix(M):
             print(M.A[row][col], end=' ')
         print("<= ", M.B[row])
 
-printMatrix(M)
-		
 from scipy import optimize
 import math
 
-res = optimize.linprog(M.C, M.A, M.B)
+def checkRes(res):
+    if(res.status == 0): #print output for the challenge
+        c_row = 0
+        provider_count = 0
+        for provider in data.Providers:
+            region_c = 0
+            for region in provider[1:]:
+                if(res.x[c_row] != 0):
+                    print(provider_count, "(", provider[0], ") ", region_c, "(", region[0], ") ", int(math.ceil(res.x[c_row])), end=' ')
+                c_row += 1
+                region_c += 1
+            provider_count += 1     
+        print('')
+    else:
+        print("status: ", res.status)
 
-if(res.status == 0): #print output for the challenge
-    c_row = 0
-    provider_count = 0
-    '''for p_name, provider in data['providers'].items():
-        region_c = 0
-        for r_name, region in provider['regions'].items():
-            if(res.x[c_row] != 0):
-                print(provider_count, "(", p_name, ") ", region_c, "(", r_name, ") ", int(math.ceil(res.x[c_row])), end=' ')
-            c_row += 1
-            region_c += 1
-        provider_count += 1
-    '''
-    for provider in data.Providers:
-        region_c = 0
-        for region in provider[1:]:
-            if(res.x[c_row] != 0):
-                print(provider_count, "(", provider[0], ") ", region_c, "(", region[0], ") ", int(math.ceil(res.x[c_row])), end=' ')
-            c_row += 1
-            region_c += 1
-        provider_count += 1
-    
-    print('')
-else:
-    print("status: ", res.status)
+######
+for p in data.Projects:
+    M = cloud_adventure.getMatrixP(data, p)
+    printMatrix(M)
+    res = optimize.linprog(M.C, M.A, M.B)
+    checkRes(res)
+    print("pacchetti da rimuovere:")
+    for pacchetti_da_rimuovere in M.B[:data.S]:
+        print(pacchetti_da_rimuovere)
+    #M.B[0-len(M.B) pacchetti da rimuovere)
+######
