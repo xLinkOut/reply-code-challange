@@ -20,6 +20,7 @@ class dataStruct():
         self.Services = []
         self.Countries = []
         self.Projects = []
+        self.Output = []
 
     def addProvider(self,provider):
         self.Providers.append(provider)
@@ -127,7 +128,7 @@ for p in range(data.P):
     data.addProject(project)
 
 input_file.close()
-data.printAll()
+#data.printAll()
 
 import cloud_adventure 
 
@@ -148,28 +149,39 @@ import math
 
 def checkRes(res):
     if(res.status == 0): #print output for the challenge
+        soluzione = [] 
         c_row = 0
         provider_count = 0
         for provider in data.Providers:
             region_c = 0
             for region in provider[1:]:
                 if(res.x[c_row] != 0):
-                    print(provider_count, "(", provider[0], ") ", region_c, "(", region[0], ") ", int(math.ceil(res.x[c_row])), end=' ')
+                    pacchetti_necessari = int(math.ceil(res.x[c_row]))
+                    print(provider_count, "(", provider[0], ") ", region_c, "(", region[0], ") ", pacchetti_necessari, end=' ')
+                    print("\nPacchetti: {} - {} ".format(data.Providers[provider_count][region_c+1][1],pacchetti_necessari),end='')
+                    data.Providers[provider_count][region_c+1][1] -= pacchetti_necessari
+                    print("= {}".format(data.Providers[provider_count][region_c+1][1]))
+                    soluzione.append(int(provider_count))
+                    soluzione.append(int(region_c))
+                    soluzione.append(int(pacchetti_necessari))
+                    #soluzione.append([int(provider_count),int(region_c),int(pacchetti_necessari)])
                 c_row += 1
                 region_c += 1
-            provider_count += 1     
+            provider_count += 1
+        data.Output.append(soluzione)
         print('')
+
     else:
         print("status: ", res.status)
 
-######
+from operator import itemgetter
+#sort project by penality
+data.Projects.sort(key=itemgetter(0))
+
 for p in data.Projects:
     M = cloud_adventure.getMatrixP(data, p)
     printMatrix(M)
     res = optimize.linprog(M.C, M.A, M.B)
     checkRes(res)
-    print("pacchetti da rimuovere:")
-    for pacchetti_da_rimuovere in M.B[:data.S]:
-        print(pacchetti_da_rimuovere)
-    #M.B[0-len(M.B) pacchetti da rimuovere)
-######
+
+pprint(data.Output)
