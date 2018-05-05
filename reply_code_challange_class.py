@@ -180,8 +180,10 @@ data.Projects.sort(key=itemgetter(0))
 
 for p in data.Projects:
     M = cloud_adventure.getMatrixP(data, p)
-    printMatrix(M)
+    #printMatrix(M)
     res = optimize.linprog(M.C, M.A, M.B)
     checkRes(res)
 
+#sort back solution to original order
+data.Output.sort(key=dict(zip(data.Output, data.Projects)).get)
 pprint(data.Output)
