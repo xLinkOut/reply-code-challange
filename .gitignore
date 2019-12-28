@@ -1,0 +1,6 @@
+# Files
+*.pyc
+
+# Directories
+*/__pycache__/
+doc/

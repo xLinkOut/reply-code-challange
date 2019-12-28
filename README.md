@@ -1,2 +1,2 @@
-# reply_code_challange
-Solution for the "Reply Code Challange" problem.
+# Reply Code Challange
+Repository with solutions of Reply's Code Challange.
