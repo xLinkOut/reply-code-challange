@@ -124,3 +124,12 @@ with open(input_filename,'r') as input_file:
     #print(problem.pretty_print_projects())
 
 print("Parser done.")
+
+# Output syntax: 
+# Line i: provider_1_info, ..., provider_N_info
+# provider_i_info[0]: <int> zero-based index of the provider in the input file
+# provider_i_info[1]: <int> zero-based index of the region inside the list of that provider
+# provider_i_info[2]: <int> number of packages to acquire from that provider
+# Example: 0 0 60 1 0 1 1 1 8 2 0 1 2 1 10
+# == [0 0 60], [1 0 1], [1 1 8], [2 0 1], [2 1 10]
+
