@@ -1,6 +1,9 @@
 # Files
 *.pyc
+.DS_Store
 
 # Directories
-*/__pycache__/
 doc/
+venv/
+.vscode/
+__pycache__/
