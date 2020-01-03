@@ -1,6 +1,6 @@
 from sys import argv
-from os.path import exists
 from json import dumps
+from os.path import exists
 
 try:
     input_filename = argv[1]
@@ -18,6 +18,8 @@ class Problem:
         self.S = int(S) # Number of services
         self.C = int(C) # Number of countries
         self.P = int(P) # Number of projects
+        self.projects = list()
+        self.providers = dict()
 
         # Constraints
         if not 1 <= self.V <= 20: raise self.ConstraintException('V')
@@ -30,9 +32,6 @@ class Problem:
 
     def set_countries(self,countries):
         self.countries = countries # Save countries names
-
-    def create_providers(self):
-        self.providers = dict()
 
     def set_provider(self,provider_name):
         self.providers[provider_name] = dict() 
@@ -47,9 +46,6 @@ class Problem:
             }
         })
     
-    def create_projects(self):
-        self.projects = list()
-
     def set_project(self,penality,country_name,units):
         self.projects.append({
             'country': country_name,
@@ -65,6 +61,11 @@ class Problem:
 
     class ConstraintException(Exception):
         pass
+
+    def average_project_latency():
+        pass
+
+
 
 with open(input_filename,'r') as input_file:
     # .readline() read one line and step
@@ -85,7 +86,6 @@ with open(input_filename,'r') as input_file:
     problem.set_countries(countries)
     print(problem.countries)
 
-    problem.create_providers()
     for v in range(problem.V):
         # Each line represent one provider
         first_v_line = input_file.readline().replace('\n','')
@@ -100,7 +100,7 @@ with open(input_filename,'r') as input_file:
             region_info = second_r_line.split(' ')
             # region_info[0] = <int> total number of available packages
             # region_info[1] = <float> cost of single package
-            # region_info[2:S] = <int> number of units of the i-esim service available in each package
+            # region_info[2:S-2] = <int> number of units of the i-esim service available in each package
 
             third_r_line = input_file.readline().replace('\n','')
             latencies = third_r_line.split(' ')
@@ -108,28 +108,28 @@ with open(input_filename,'r') as input_file:
 
             problem.set_provider_region(provider_name,region_name,region_info,latencies)
             #print(problem.providers[provider_name][region_name])
-        print(problem.providers[provider_name])
-    #print(problem.pretty_print_providers())
+        #print(problem.providers[provider_name])
+    print(problem.pretty_print_providers())
         
-    problem.create_projects()
     for p in range(problem.P):
         first_p_line = input_file.readline().replace('\n','')
         project_info = first_p_line.split(' ')
         # project_info[0] = <int> base penality applied fot violating the SLA
         # project_info[1] = <str> country that will use the project
-        # project_info[2:S] = <int> amount of unit needed for each service type
+        # project_info[2:S-2] = <int> amount of unit needed for each service type
 
         problem.set_project(project_info[0],project_info[1],project_info[2:])
-        print(problem.projects[p])
-    #print(problem.pretty_print_projects())
+        #print(problem.projects[p])
+    print(problem.pretty_print_projects())
 
-print("Parser done.")
+    print("Parsing data done, now projects.")
 
-# Output syntax: 
-# Line i: provider_1_info, ..., provider_N_info
-# provider_i_info[0]: <int> zero-based index of the provider in the input file
-# provider_i_info[1]: <int> zero-based index of the region inside the list of that provider
-# provider_i_info[2]: <int> number of packages to acquire from that provider
-# Example: 0 0 60 1 0 1 1 1 8 2 0 1 2 1 10
-# == [0 0 60], [1 0 1], [1 1 8], [2 0 1], [2 1 10]
+    # Output syntax: 
+    # Line i: provider_1_info, ..., provider_N_info
+    # provider_i_info[0]: <int> zero-based index of the provider in the input file
+    # provider_i_info[1]: <int> zero-based index of the region inside the list of that provider
+    # provider_i_info[2]: <int> number of packages to acquire from that provider
+    # Example: 0 0 60 1 0 1 1 1 8 2 0 1 2 1 10
+    # == [0 0 60], [1 0 1], [1 1 8], [2 0 1], [2 1 10]
 
+    # Magic happens here...

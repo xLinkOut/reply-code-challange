@@ -176,7 +176,7 @@ def checkRes(res):
 
 from operator import itemgetter
 #sort project by penality
-data.Projects.sort(key=itemgetter(0))
+#data.Projects.sort(key=itemgetter(0))
 
 for p in data.Projects:
     M = cloud_adventure.getMatrixP(data, p)
@@ -185,5 +185,5 @@ for p in data.Projects:
     checkRes(res)
 
 #sort back solution to original order
-data.Output.sort(key=dict(zip(data.Output, data.Projects)).get)
-pprint(data.Output)
+#data.Output.sort(key=dict(zip(data.Output, data.Projects)).get)
+print(data.Output)
